@@ -115,6 +115,7 @@ static bool has_hooked_messaging_center;
 
 void rocketbootstrap_distributedmessagingcenter_apply(CPDistributedMessagingCenter *messaging_center)
 {
+    NSLog(@"orz-----rocketbootstrap_distributedmessagingcenter_apply---%@", messaging_center);
 	if (rocketbootstrap_is_passthrough())
 		return;
 	unfair_lock_lock(&shim_lock);

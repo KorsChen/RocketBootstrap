@@ -143,6 +143,7 @@ static kern_return_t rocketbootstrap_look_up_with_timeout(mach_port_t bp, const 
 		mach_port_mod_refs(selfTask, servicesPort, MACH_PORT_RIGHT_SEND, -1);
 		return err;
 	}
+    NSLog(@"RocketBootstrap: 5rocketbootstrap_look_up(%d, %u, %u)", err, replyPort, servicesPort);
 	// Send message
 	size_t service_name_size = strlen(service_name);
 	size_t size = (sizeof(_rocketbootstrap_lookup_query_t) + service_name_size + 3) & ~3;

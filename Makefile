@@ -2,18 +2,20 @@ TARGET := iphone:clang:latest:13.0
 ARCHS := arm64 arm64e
 INSTALL_TARGET_PROCESSES = SpringBoard MobileGestaltHelper rocketd _rocketd_reenable
 
-ifeq ($(ROOTLESS),1)
-export THEOS_PACKAGE_SCHEME := rootless
-endif
+# ROOTLESS=""
+
+# ifeq ($(ROOTLESS),1)
+# export THEOS_PACKAGE_SCHEME := rootless
+# endif
 
 LIBRARY_NAME := librocketbootstrap
 librocketbootstrap_FILES += Tweak.x Shims.x
-ifeq ($(THEOS_PACKAGE_SCHEME),rootless)
-librocketbootstrap_LDFLAGS += -install_name @rpath/librocketbootstrap.dylib
-librocketbootstrap_WEAK_LIBRARIES += libs/rootless/TweakInject.tbd
-else
+# ifeq ($(THEOS_PACKAGE_SCHEME),rootless)
+# librocketbootstrap_LDFLAGS += -install_name @rpath/librocketbootstrap.dylib
+# librocketbootstrap_WEAK_LIBRARIES += libs/rootless/TweakInject.tbd
+# else
 librocketbootstrap_WEAK_LIBRARIES += libs/TweakInject.tbd
-endif
+# endif
 librocketbootstrap_LIBRARIES += substrate
 librocketbootstrap_FRAMEWORKS += Foundation
 librocketbootstrap_USE_MODULES += 0
@@ -41,8 +43,7 @@ include $(THEOS_MAKE_PATH)/tool.mk
 before-all::
 	@rm -rf layout
 	@mkdir -p layout
-	@[ "$$ROOTLESS" = "1" ] && cp -rP defaultlayout/DEBIAN defaultlayout/var layout/ || true
-	@[ "$$ROOTLESS" = "" ] && cp -rP defaultlayout/DEBIAN defaultlayout/Library layout/ || true
+	@cp -rP defaultlayout/DEBIAN defaultlayout/Library layout/ || true
 
 stage::
 	@mkdir -p "$(THEOS_STAGING_DIR)/usr/include"
